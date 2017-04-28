@@ -44,6 +44,7 @@
       "remoteAllowedCIDR": {
       "type": "string",
       "minLength": 1,
+      "defaultValue": "0.0.0.0/0" 
       "metadata": {
         "description": "Enter Public IP CIDR Allowed for accessing the deployment.Enter in 0.0.0.0/0 format. You can always modify these later in NSG Settings"
       }
