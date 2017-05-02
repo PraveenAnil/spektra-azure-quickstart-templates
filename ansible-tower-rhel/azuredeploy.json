@@ -96,8 +96,9 @@
     "scriptStart": "su -c'sh ",
     "customScriptCommand": "[concat(variables('scriptStart'), variables('scriptFileName'), ' ')]",
     "scriptClose": "'",
-    "RHELTags": {
+    "RedHatTags": {
       "type": "object",
+      "quickstartname": "ansible-tower-rhel",
       "provider": "sampleID"
       }
   },
@@ -110,7 +111,8 @@
       "comments": "This availability set will consist of ansible tower installed virtual machine",
       "tags": {
         "displayName": "Availabilty Set-Tower",
-        "provider": "[variables('RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
       }
@@ -123,7 +125,8 @@
       "comments": "This availability set will consist of virtual machines configured as ansible clients ",
       "tags": {
         "displayName": "Availability Set-Client",
-        "provider": "[variables('RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
       }
@@ -136,7 +139,8 @@
       "comments": "This will have firewall rules for Ansible Tower Virtual machine",
       "tags": {
         "displayName": "Tower-NSG",
-        "provider": "[variables('RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
         "securityRules": [
@@ -149,7 +153,7 @@
               "direction": "Inbound",
               "priority": 201,
               "protocol": "Tcp",
-              "sourceAddressPrefix": "[parameter('remoteAllowedCIDR')",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "sourcePortRange": "*"
             }
           },
@@ -162,7 +166,7 @@
               "direction": "Inbound",
               "priority": 202,
               "protocol": "Tcp",
-              "sourceAddressPrefix": "[parameter('remoteAllowedCIDR')",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "sourcePortRange": "*"
             }
           },
@@ -175,7 +179,7 @@
               "direction": "Inbound",
               "priority": 203,
               "protocol": "Tcp",
-              "sourceAddressPrefix": "[parameter('remoteAllowedCIDR')",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "sourcePortRange": "*"
             }
           },
@@ -188,7 +192,7 @@
               "direction": "Inbound",
               "priority": 200,
               "protocol": "Tcp",
-              "sourceAddressPrefix": "[parameter('remoteAllowedCIDR')",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "sourcePortRange": "*"
             }
           }
@@ -203,7 +207,7 @@
       "comments": "This nsg will have security rules for all ansible clients",
       "tags": {
         "displayName": "Client-NSG",
-        "provider": "[variables('RHELTags').provider]"
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
         "securityRules": [
@@ -216,7 +220,7 @@
               "direction": "Inbound",
               "priority": 301,
               "protocol": "Tcp",
-              "sourceAddressPrefix": "[parameter('remoteAllowedCIDR')",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "sourcePortRange": "*"
             }
           },
@@ -229,7 +233,7 @@
               "direction": "Inbound",
               "priority": 302,
               "protocol": "Tcp",
-              "sourceAddressPrefix": "[parameter('remoteAllowedCIDR')",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "sourcePortRange": "*"
             }
           },
@@ -242,7 +246,7 @@
               "direction": "Inbound",
               "priority": 303,
               "protocol": "Tcp",
-              "sourceAddressPrefix": "[parameter('remoteAllowedCIDR')",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "sourcePortRange": "*"
             }
           },
@@ -255,7 +259,7 @@
               "direction": "Inbound",
               "priority": 300,
               "protocol": "Tcp",
-              "sourceAddressPrefix": "[parameter('remoteAllowedCIDR')",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "sourcePortRange": "*"
             }
           }
@@ -270,7 +274,8 @@
       "comments": "This storage account is used to store the VM disks of ansible tower vm",
       "tags": {
         "displayName": "Tower Storage Account",
-        "provider": "[variables('RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
         "accountType": "[variables('StorageAccountType')]"
@@ -284,7 +289,8 @@
       "comments": "This storage account is used to store the VM disks of all client vms",
       "tags": {
         "displayName": "Client Storage Account",
-        "provider": "[variables('RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
         "accountType": "[variables('StorageAccountType')]"
@@ -298,7 +304,8 @@
       "comments": "This storage account is used for diagnostic data for all vms",
       "tags": {
         "displayName": "Diagnostics Storage Account",
-        "provider": "[variables('RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
         "accountType": "Standard_LRS"
@@ -312,7 +319,8 @@
       "comments": "This Virtual Network contains all the VMs needed",
       "tags": {
         "displayName": "Ansible-Virtual Network",
-        "provider": "[variables('RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",
+        "provider": "[variables('RedHatTags').provider]"
       },
       "dependsOn": [
         "[resourceId('Microsoft.Network/networkSecurityGroups', variables('ansibleNsgName'))]",
@@ -354,7 +362,8 @@
       "comments": "This Public IP is used by the Ansible Tower installed VM",
       "tags": {
         "displayName": "Public IP Address -Tower VM",
-         "provider": "[variables('RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",
+         "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
         "publicIPAllocationMethod": "Static",
@@ -371,7 +380,8 @@
       "comments": "This will create two public IP used by Client VMs",
       "tags": {
         "displayName": "Client VMs Public IP Addresses",
-         "provider": "[variables('RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",
+         "provider": "[variables('RedHatTags').provider]"
       },
       "copy": {
         "name": "clientpubliciploop",
@@ -392,7 +402,8 @@
       "comments": "These NIC's will be used by ClientVM1 and ClientVM2",
       "tags": {
         "displayName": "NIC Client VMs",
-         "provider": "[variables('RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",
+         "provider": "[variables('RedHatTags').provider]"
       },
       "dependsOn": [
         "[resourceId('Microsoft.Network/virtualNetworks', variables('ansibleVnetName'))]",
@@ -427,7 +438,8 @@
       "comments": "Two Ansible Client Virtual Machines",
       "tags": {
         "displayName": "Client-VMs",
-       "provider": "[variables('RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",
+        "provider": "[variables('RedHatTags').provider]"
       },
       "dependsOn": [
         "[resourceId('Microsoft.Storage/storageAccounts', variables('clientStorageAccountName'))]",
@@ -490,7 +502,8 @@
       "comments": "These NIC will be used by Ansible Tower VM",
       "tags": {
         "displayName": "NIC Tower VM",
-        "provider": "[variables('RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",
+        "provider": "[variables('RedHatTags').provider]"
       },
       "dependsOn": [
         "[resourceId('Microsoft.Network/virtualNetworks', variables('ansibleVnetName'))]",
@@ -521,7 +534,8 @@
       "comments": "This VM will be used as Ansible Tower VM",
       "tags": {
         "displayName": "VM-AnsibleTower",
-        "provider": "[variables('RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",
+        "provider": "[variables('RedHatTags').provider]"
       },
       "dependsOn": [
         "[resourceId('Microsoft.Storage/storageAccounts', variables('towerStorageAccountName'))]",
@@ -590,7 +604,9 @@
           "location": "[resourceGroup().location]",
           "comments": "These VM Extensions are used to setup ansible tower on the VM",
           "tags": {
-            "displayName": "CustomInstallTower"
+            "displayName": "CustomInstallTower",
+            "quickstartname": "[variables('RedHatTags').quickstartname]",
+            "provider": "[variables('RedHatTags').provider]"
           },
           "dependsOn": [
             "[resourceId('Microsoft.Compute/virtualMachines', variables('vmTowerName'))]"
