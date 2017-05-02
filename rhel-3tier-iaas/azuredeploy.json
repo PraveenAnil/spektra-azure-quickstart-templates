@@ -86,8 +86,9 @@
     "appTierVmName": "app-tier-vm",
     "databaseTierVmName": "database-tier-vm",
     "jumpVmName": "jump-vm",
-    "RHELTags": {
+    "RedHatTags": {
       "type": "object",
+      "quickstartname": "rhel-3tier-iaas",
       "provider": "sampleID"
       } 
   },
@@ -100,7 +101,8 @@
       "comments": "4 Storage accounts used to store the VM disks for each tier",
       "tags": {
         "displayName": "VM Storage Accounts",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "copy": {
         "name": "vmStorageAccountLoop",
@@ -122,7 +124,8 @@
       "comments": "Storage account used to store the diagnostics data",
       "tags": {
         "displayName": "Diagnostics Storage Account",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "sku": {
         "name": "Standard_LRS"
@@ -140,7 +143,8 @@
       "comments": "NSG for Web Subnet. Rules for allowing HTTP and HTTPS requests from internet are created",
       "tags": {
         "displayName": "Web NSG",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
         "securityRules": [
@@ -150,7 +154,7 @@
               "protocol": "Tcp",
               "sourcePortRange": "*",
               "destinationPortRange": "80",
-              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "destinationAddressPrefix": "10.0.1.0/24",
               "access": "Allow",
               "priority": 110,
@@ -163,7 +167,7 @@
               "protocol": "Tcp",
               "sourcePortRange": "*",
               "destinationPortRange": "443",
-              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "destinationAddressPrefix": "10.0.1.0/24",
               "access": "Allow",
               "priority": 120,
@@ -181,7 +185,8 @@
       "comments": "NSG for App Subnet. By default, intra Vnet traffic is allowed and requests from internet are denied",
       "tags": {
         "displayName": "App NSG",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
         "securityRules": [
@@ -196,7 +201,8 @@
       "comments": "NSG for Database Subnet. By default, intra Vnet traffic is allowed and requests from internet are denied",
       "tags": {
         "displayName": "Database NSG",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
         "securityRules": [
@@ -211,7 +217,8 @@
       "comments": "NSG for Jump Subnet. Rules for allowing SSH from internet are created",
       "tags": {
         "displayName": "Jump NSG",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
         "securityRules": [
@@ -221,7 +228,7 @@
               "protocol": "Tcp",
               "sourcePortRange": "*",
               "destinationPortRange": "22",
-              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "destinationAddressPrefix": "10.0.0.128/25",
               "access": "Allow",
               "priority": 110,
@@ -239,7 +246,8 @@
       "comments": " Public IP used by the Jump VM",
       "tags": {
         "displayName": "Jump VM Public IP",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
         "publicIPAllocationMethod": "Static",
@@ -257,7 +265,8 @@
       "comments": "Public IP used by the Web Server Load Balancer",
       "tags": {
         "displayName": "Web LB Public IP",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
         "publicIPAllocationMethod": "Static",
@@ -275,7 +284,8 @@
       "comments": "Virtual network for overall solution",
       "tags": {
         "displayName": "Virtual Network",
-        "provider": "[variables('<RHELTags').provider]"
+         "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "dependsOn": [
         "[concat('Microsoft.Network/networkSecurityGroups/', variables('webNSGName'))]",
@@ -337,7 +347,8 @@
       "comments": "These are the Availability Sets for Web VMs, App VMs and Database VMs",
       "tags": {
         "displayName": "Availability Sets",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "copy": {
         "name": "availSetLoop",
@@ -355,7 +366,8 @@
       "comments": "This Load Balancer is used to load balance Web traffic among Web Tier VMs",
       "tags": {
         "displayName": "External Load Balancer",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', variables('weblbIPAddressName'))]"
@@ -446,7 +458,8 @@
       "comments": "This Internal Load Balancer is used to load balance traffic from Web VM's to Bussiness Tier VMs",
       "tags": {
         "displayName": "Internal Load Balancer",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "dependsOn": [
         "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
@@ -508,7 +521,8 @@
       "comments": "NICs for Web Tier VMs",
       "tags": {
         "displayName": "Web Tier VM NICs",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "dependsOn": [
         "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
@@ -545,7 +559,8 @@
       "comments": "NICs for App Tier VMs",
       "tags": {
         "displayName": "App Tier VM NICs",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "dependsOn": [
         "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
@@ -582,7 +597,8 @@
       "comments": "NICs for Database Tier VMs",
       "tags": {
         "displayName": "Database Tier VM NICs",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "dependsOn": [
         "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
@@ -613,7 +629,8 @@
       "comments": "NIC for Jump VM",
       "tags": {
         "displayName": "Jump VM NIC",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "dependsOn": [
         "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
@@ -643,7 +660,8 @@
       "comments": " Web Tier VMs",
       "tags": {
         "displayName": "Web Tier VMs",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "dependsOn": [
         "[concat('Microsoft.Storage/storageAccounts/', variables('vmStorageAccountName'),'1')]",
@@ -705,7 +723,8 @@
       "comments": " App Tier VMs",
       "tags": {
         "displayName": "App Tier VMs",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "dependsOn": [
         "[concat('Microsoft.Storage/storageAccounts/', variables('vmStorageAccountName'),'2')]",
@@ -767,7 +786,8 @@
       "comments": "Database Tier VMs",
       "tags": {
         "displayName": "Database Tier VMs",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "dependsOn": [
         "[concat('Microsoft.Storage/storageAccounts/', variables('vmStorageAccountName'),'3')]",
@@ -829,7 +849,8 @@
       "comments": "Jump VM",
       "tags": {
         "displayName": "Jump VM",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "dependsOn": [
         "[concat('Microsoft.Storage/storageAccounts/', variables('vmStorageAccountName'),'4')]",
