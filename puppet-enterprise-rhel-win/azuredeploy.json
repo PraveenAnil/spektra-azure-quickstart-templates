@@ -99,14 +99,15 @@
     "scriptFileName2": "installpuppetagent.sh",
     "scriptStart": "su -c'sh ",
     "customScriptCommand2": "[concat(variables('scriptStart'), variables('scriptFileName2'), ' ')]",
-    "RHELTags": {
+    "RedHatTags": {
       "type": "object",
+      "quickstartname": "puppet-enterprise-rhel-win",
       "provider": "sampleID"
       }, 
-      "PuppetTags": {
+    "puppetTags": {
       "type": "object",
       "provider": "sampleID"
-      }, 
+      }
   },
   "resources": [
     {
@@ -117,7 +118,8 @@
       "comments": "This availability set will consist of puppet master installed virtual machine",
       "tags": {
         "displayName": "Availability Set Puppet Master",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
       }
@@ -130,7 +132,8 @@
       "comments": "This availability set will consist of windows virtual machines configured as puppet agents ",
       "tags": {
         "displayName": "Puppet Agents Availability Set",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
       }
@@ -143,7 +146,8 @@
       "comments": "This will have firewall rules for Puppet Master Virtual machine",
       "tags": {
         "displayName": "Puppet NSG",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
         "securityRules": [
@@ -254,7 +258,8 @@
       "comments": "This will have firewall rules for linux puppet agents",
       "tags": {
         "displayName": "Linux Agent NSG",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
         "securityRules": [
@@ -264,7 +269,7 @@
               "protocol": "Tcp",
               "sourcePortRange": "*",
               "destinationPortRange": "8140",
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "destinationAddressPrefix": "*",
               "access": "Allow",
               "priority": 100,
@@ -278,7 +283,7 @@
               "protocol": "Tcp",
               "sourcePortRange": "*",
               "destinationPortRange": "8080",
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "destinationAddressPrefix": "*",
               "access": "Allow",
               "priority": 131,
@@ -292,7 +297,7 @@
               "protocol": "Tcp",
               "sourcePortRange": "*",
               "destinationPortRange": "80",
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "destinationAddressPrefix": "*",
               "access": "Allow",
               "priority": 120,
@@ -306,7 +311,7 @@
               "protocol": "Tcp",
               "sourcePortRange": "*",
               "destinationPortRange": "22",
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "destinationAddressPrefix": "*",
               "access": "Allow",
               "priority": 201,
@@ -320,7 +325,7 @@
               "protocol": "Tcp",
               "sourcePortRange": "*",
               "destinationPortRange": "61613",
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "destinationAddressPrefix": "*",
               "access": "Allow",
               "priority": 102,
@@ -334,7 +339,7 @@
               "protocol": "Tcp",
               "sourcePortRange": "*",
               "destinationPortRange": "443",
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "destinationAddressPrefix": "*",
               "access": "Allow",
               "priority": 103,
@@ -347,7 +352,7 @@
               "protocol": "Tcp",
               "sourcePortRange": "*",
               "destinationPortRange": "8142",
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "destinationAddressPrefix": "*",
               "access": "Allow",
               "priority": 104,
@@ -365,7 +370,8 @@
       "comments": "This will have firewall rules for windows puppet agents",
       "tags": {
         "displayName": "Windows Agent NSG",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
         "securityRules": [
@@ -375,7 +381,7 @@
               "protocol": "Tcp",
               "sourcePortRange": "*",
               "destinationPortRange": "8140",
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "destinationAddressPrefix": "*",
               "access": "Allow",
               "priority": 100,
@@ -389,7 +395,7 @@
               "protocol": "Tcp",
               "sourcePortRange": "*",
               "destinationPortRange": "8080",
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "destinationAddressPrefix": "*",
               "access": "Allow",
               "priority": 121,
@@ -403,7 +409,7 @@
               "protocol": "Tcp",
               "sourcePortRange": "*",
               "destinationPortRange": "80",
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "destinationAddressPrefix": "*",
               "access": "Allow",
               "priority": 120,
@@ -417,7 +423,7 @@
               "protocol": "Tcp",
               "sourcePortRange": "*",
               "destinationPortRange": "3389",
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "destinationAddressPrefix": "*",
               "access": "Allow",
               "priority": 101,
@@ -431,7 +437,7 @@
               "protocol": "Tcp",
               "sourcePortRange": "*",
               "destinationPortRange": "22",
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "destinationAddressPrefix": "*",
               "access": "Allow",
               "priority": 201,
@@ -445,7 +451,7 @@
               "protocol": "Tcp",
               "sourcePortRange": "*",
               "destinationPortRange": "61613",
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "destinationAddressPrefix": "*",
               "access": "Allow",
               "priority": 102,
@@ -459,7 +465,7 @@
               "protocol": "Tcp",
               "sourcePortRange": "*",
               "destinationPortRange": "443",
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "destinationAddressPrefix": "*",
               "access": "Allow",
               "priority": 103,
@@ -472,7 +478,7 @@
               "protocol": "Tcp",
               "sourcePortRange": "*",
               "destinationPortRange": "8142",
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
               "destinationAddressPrefix": "*",
               "access": "Allow",
               "priority": 104,
@@ -490,7 +496,8 @@
       "comments": "This storage account is used to store the VM disks of puppet master vm",
       "tags": {
         "displayName": "Puppet Master Storage Account",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
         "accountType": "[variables('StorageAccountType')]"
@@ -504,7 +511,8 @@
       "comments": "This storage account is used to store the VM disks of RHEL puppet agent vms",
       "tags": {
         "displayName": "Linux Agent Storage Account",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
         "accountType": "[variables('storageAccountType')]"
@@ -518,7 +526,8 @@
       "comments": "This storage account is used to store the VM disks of windows puppet agent vms",
       "tags": {
         "displayName": "Windows Agent Storage Account",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
         "accountType": "[variables('storageAccountType')]"
@@ -532,7 +541,8 @@
       "comments": "This storage account is used for diagnostic data for all vms",
       "tags": {
         "displayName": "Diagnostics Storage Account",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
         "accountType": "Standard_LRS"
@@ -546,7 +556,8 @@
       "comments": "This Virtual Network contains all the VMs needed",
       "tags": {
         "displayName": "Puppet Virtual Network",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "dependsOn": [
         "[concat('Microsoft.Network/networkSecurityGroups/', variables('puppetNsgName'))]",
@@ -598,7 +609,8 @@
       "comments": "This Public IP is used by the Puppet Master installed VM",
       "tags": {
         "displayName": "Public IP - Puppet Master",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
         "publicIPAllocationMethod": "Static",
@@ -615,7 +627,8 @@
       "comments": "This Public IP is used by the Load Balancer",
       "tags": {
         "displayName": "LB Public IP",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "properties": {
         "publicIPAllocationMethod": "Static",
@@ -633,7 +646,8 @@
       "comments": "This Load Balancer is used to allow RDP and SSH acess to Agent VMs via NAT rules",
       "tags": {
         "displayName": "Load Balancer",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', variables('lbIPAddressName'))]"
@@ -668,7 +682,8 @@
       "comments": "This resource adds all the NAT rules needed to allow RDP access for Windows VMs",
       "tags": {
         "displayName": "LB nat rules-RDP",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "copy": {
         "name": "lbNatLoop1",
@@ -695,7 +710,8 @@
       "comments": "This resource adds all the NAT rules needed to give SSH access for RHEL agent VMs",
       "tags": {
         "displayName": "LB nat rules-SSH",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "copy": {
         "name": "lbNatLoop2",
@@ -722,7 +738,8 @@
       "comments": "This NIC will be used by puppet master vm",
       "tags": {
         "displayName": "Puppet Master NIC",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressNamePuppetMaster'))]",
@@ -755,7 +772,8 @@
       "comments": "These NIC's will be used by linux agent vms",
       "tags": {
         "displayName": "Linux Agent NICs",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "copy": {
         "name": "linuxAgentNicLoop",
@@ -800,7 +818,8 @@
       "comments": "These NIC's will be used by windows agent vms",
       "tags": {
         "displayName": "Windows Agent NICs",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "copy": {
         "name": "windowsAgentNicLoop",
@@ -846,7 +865,8 @@
       "comments": "This vm will be used as puppet master",
       "tags": {
         "displayName": "Puppet Master VM",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "dependsOn": [
         "[concat('Microsoft.Storage/storageAccounts/', variables('puppetStorageName'))]",
@@ -909,7 +929,8 @@
       "comments": "This Script will wait untill Puppet Master gets installed",
       "tags": {
         "displayName": "Puppet Master VM Extension",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachines/', variables('puppetMasterVmName'))]"
@@ -939,7 +960,8 @@
       "comments": "These vms will be used as Windows puppet agents",
       "tags": {
         "displayName": "Windows Agent VMs",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "copy": {
         "name": "windowsAgentVmLoop",
@@ -1000,7 +1022,8 @@
       "comments": "These VM Extensions are used to setup puppet agent on the VM",
       "tags": {
         "displayName": "Windows Agent VM Extension",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "copy": {
         "name": "puppetAgentExtLoop",
@@ -1028,7 +1051,8 @@
       "comments": "These vms will be used as puppet agents",
       "tags": {
         "displayName": "Linux Agent VMs",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "copy": {
         "name": "redhatAgentVmLoop",
@@ -1089,7 +1113,8 @@
       "comments": "These VM Extensions are used to setup puppet agent on the VM",
       "tags": {
         "displayName": "Linux Agent VM Extension",
-        "provider": "[variables('<RHELTags').provider]"
+        "quickstartname": "[variables('RedHatTags').quickstartname]",        
+        "provider": "[variables('RedHatTags').provider]"
       },
       "copy": {
         "name": "linuxAgentExtLoop",
