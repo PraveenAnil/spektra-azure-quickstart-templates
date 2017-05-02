@@ -77,8 +77,9 @@
       "webVmExtensionFunction":"webServerConfig.ps1\\WebServerConfig",
       "vmStorageAccountContainerName":"vhds",
       "OSDiskName":"OSDisk",
-      "BarracudaTags": {
+      "barracudanetworksTags": {
         "type": "object",
+        "quickstartname": "barracuda-waf-iis",
         "provider": "sampleID"
       } 
    },
@@ -91,7 +92,8 @@
          "comments":"Storage account used to store the BWAF VM disks",
          "tags":{
             "displayName":"BWAF VM Storage Account",
-            "provider": "[variables('<BarracudaTags').provider]"
+            "quickstartname": "[variables('barracudanetworksTags').quickstartname]",        
+            "provider": "[variables('barracudanetworksTags').provider]"
          },
          "sku":{
             "name":"[variables('storageAccountType')]"
@@ -109,7 +111,8 @@
          "comments":"Storage account used to store the Web VM disks",
          "tags":{
             "displayName":"Web VM Storage Account",
-            "provider": "[variables('<BarracudaTags').provider]"
+            "quickstartname": "[variables('barracudanetworksTags').quickstartname]",        
+            "provider": "[variables('barracudanetworksTags').provider]"
          },
          "sku":{
             "name":"[variables('storageAccountType')]"
@@ -127,7 +130,8 @@
          "comments":"Storage account used to store VM diagnostics data",
          "tags":{
             "displayName":"Diagnostics Storage Account",
-            "provider": "[variables('<BarracudaTags').provider]"
+            "quickstartname": "[variables('barracudanetworksTags').quickstartname]",        
+            "provider": "[variables('barracudanetworksTags').provider]"
          },
          "sku":{
             "name":"Standard_LRS"
@@ -145,7 +149,8 @@
          "comments":" NSG for BWAF subnet",
          "tags":{
             "displayName":"BWAF NSG",
-            "provider": "[variables('<BarracudaTags').provider]"
+            "quickstartname": "[variables('barracudanetworksTags').quickstartname]",        
+            "provider": "[variables('barracudanetworksTags').provider]"
          },
          "properties":{
             "securityRules":[
@@ -155,7 +160,7 @@
                      "protocol":"Tcp",
                      "sourcePortRange":"*",
                      "destinationPortRange":"80",
-                      "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')",
+                      "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
                      "destinationAddressPrefix":"10.0.0.0/24",
                      "access":"Allow",
                      "priority":110,
@@ -168,7 +173,7 @@
                      "protocol":"Tcp",
                      "sourcePortRange":"*",
                      "destinationPortRange":"443",
-                      "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')",
+                      "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
                      "destinationAddressPrefix":"10.0.0.0/24",
                      "access":"Allow",
                      "priority":120,
@@ -181,7 +186,7 @@
                      "protocol":"Tcp",
                      "sourcePortRange":"*",
                      "destinationPortRange":"8000",
-                      "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')",
+                      "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
                      "destinationAddressPrefix":"10.0.0.0/24",
                      "access":"Allow",
                      "priority":130,
@@ -199,7 +204,8 @@
          "comments":" NSG for Web subnet",
          "tags":{
             "displayName":"Web NSG",
-            "provider": "[variables('<BarracudaTags').provider]"
+            "quickstartname": "[variables('barracudanetworksTags').quickstartname]",        
+            "provider": "[variables('barracudanetworksTags').provider]"
          },
          "properties":{
             "securityRules":[
@@ -209,7 +215,7 @@
                      "protocol":"Tcp",
                      "sourcePortRange":"*",
                      "destinationPortRange":"3389",
-                      "sourceAddressPrefix": "[parameter('remoteAllowedCIDR')",
+                      "sourceAddressPrefix": "[parameters('remoteAllowedCIDR')]",
                      "destinationAddressPrefix":"10.0.1.0/24",
                      "access":"Allow",
                      "priority":110,
@@ -227,7 +233,8 @@
          "comments":" Public IP used by the BWAF VM",
          "tags":{
             "displayName":"BWAF Public IP",
-            "provider": "[variables('<BarracudaTags').provider]"
+            "quickstartname": "[variables('barracudanetworksTags').quickstartname]",        
+            "provider": "[variables('barracudanetworksTags').provider]"
          },
          "properties":{
             "publicIPAllocationMethod":"Static",
@@ -245,7 +252,8 @@
          "comments":"Public IP used by the Load Balancer for RDP into Web Servers",
          "tags":{
             "displayName":"LB Public IP",
-            "provider": "[variables('<BarracudaTags').provider]"
+            "quickstartname": "[variables('barracudanetworksTags').quickstartname]",        
+            "provider": "[variables('barracudanetworksTags').provider]"
          },
          "properties":{
             "publicIPAllocationMethod":"Static",
@@ -263,7 +271,8 @@
          "comments":"Virtual network for overall solution",
          "tags":{
             "displayName":"Bwaf Virtual Network",
-            "provider": "[variables('<BarracudaTags').provider]"
+            "quickstartname": "[variables('barracudanetworksTags').quickstartname]",        
+            "provider": "[variables('barracudanetworksTags').provider]"
          },
          "dependsOn":[
             "[concat('Microsoft.Network/networkSecurityGroups/', variables('webNSGName'))]",
@@ -305,7 +314,8 @@
          "comments":"This is the Availability Set for all Web VMs",
          "tags":{
             "displayName":"Web Avail Set",
-            "provider": "[variables('<BarracudaTags').provider]"
+            "quickstartname": "[variables('barracudanetworksTags').quickstartname]",        
+            "provider": "[variables('barracudanetworksTags').provider]"
          },
          "properties":{
 
@@ -319,7 +329,8 @@
          "comments":"This is the Availability Set for BWAF VM",
          "tags":{
             "displayName":"BWAF Avail Set",
-            "provider": "[variables('<BarracudaTags').provider]"
+            "quickstartname": "[variables('barracudanetworksTags').quickstartname]",        
+            "provider": "[variables('barracudanetworksTags').provider]"
          },
          "properties":{
 
@@ -333,7 +344,8 @@
          "comments":"This Load Balancer is used to allow RDP access to Web VMs",
          "tags":{
             "displayName":"Web RDP Load Balancer",
-            "provider": "[variables('<BarracudaTags').provider]"
+            "quickstartname": "[variables('barracudanetworksTags').quickstartname]",        
+            "provider": "[variables('barracudanetworksTags').provider]"
          },
          "dependsOn":[
             "[concat('Microsoft.Network/publicIPAddresses/', variables('lbIPAddressName'))]"
@@ -364,7 +376,8 @@
          "comments":"This resource adds all the NAT rules needed to allow RDP access to Web Servers VMs",
          "tags":{
             "displayName":"LB RDP NAT rules",
-            "provider": "[variables('<BarracudaTags').provider]"
+            "quickstartname": "[variables('barracudanetworksTags').quickstartname]",        
+            "provider": "[variables('barracudanetworksTags').provider]"
          },
          "dependsOn":[
             "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]"
@@ -391,7 +404,8 @@
          "comments":"NICs for Web Servers",
          "tags":{
             "displayName":"Web VM NICs",
-            "provider": "[variables('<BarracudaTags').provider]"
+            "quickstartname": "[variables('barracudanetworksTags').quickstartname]",        
+            "provider": "[variables('barracudanetworksTags').provider]"
          },
          "dependsOn":[
             "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
@@ -433,7 +447,8 @@
          "comments":"NIC for BWAF VM",
          "tags":{
             "displayName":"BWAF VM NIC",
-            "provider": "[variables('<BarracudaTags').provider]"
+            "quickstartname": "[variables('barracudanetworksTags').quickstartname]",        
+            "provider": "[variables('barracudanetworksTags').provider]"
          },
          "dependsOn":[
             "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
@@ -464,7 +479,8 @@
          "comments":" Web Server VMs",
          "tags":{
             "displayName":"Web VMs",
-            "provider": "[variables('<BarracudaTags').provider]"
+            "quickstartname": "[variables('barracudanetworksTags').quickstartname]",        
+            "provider": "[variables('barracudanetworksTags').provider]"
          },
          "dependsOn":[
             "[concat('Microsoft.Storage/storageAccounts/', variables('webStorageAccountName'))]",
@@ -526,7 +542,8 @@
                "comments":"This VM Extension loops to setup IIS in each Web VMs using DSC",
                "tags":{
                   "displayName":"Web VM Extensions",
-                  "provider": "[variables('<BarracudaTags').provider]"
+                  "quickstartname": "[variables('barracudanetworksTags').quickstartname]",        
+                  "provider": "[variables('barracudanetworksTags').provider]"
                },
                "dependsOn":[
                   "[concat('Microsoft.Compute/virtualMachines/', variables('webVmName'), copyindex(1))]"
@@ -559,7 +576,8 @@
          "comments":"This is the Barracuda WAF VM",
          "tags":{
             "displayName":"BWAF VM",
-            "provider": "[variables('<BarracudaTags').provider]"
+            "quickstartname": "[variables('barracudanetworksTags').quickstartname]",        
+            "provider": "[variables('barracudanetworksTags').provider]"
          },
          "dependsOn":[
             "[concat('Microsoft.Storage/storageAccounts/', variables('bwafStorageAccountName'))]",
